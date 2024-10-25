@@ -5,9 +5,12 @@
 package cat.paucasesnovescifp.jframes;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
@@ -28,6 +31,7 @@ public class Video extends javax.swing.JFrame {
         fc = new JFileChooser();
         mp = new EmbeddedMediaPlayerComponent();
         VideoPanel.add(mp,BorderLayout.CENTER);
+       
     }
 
     /**
@@ -188,7 +192,7 @@ public class Video extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1ValueChanged
 
     private void txtVideosPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVideosPathActionPerformed
-        // TODO add your handling code here:
+ // TODO add your handling code here:
     }//GEN-LAST:event_txtVideosPathActionPerformed
 
     /**
@@ -223,6 +227,7 @@ public class Video extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new Video().setVisible(true);
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
