@@ -143,38 +143,29 @@ public void updateUsuaris(Usuari usuari) {
     }
 }
 
-    public ArrayList<Intent> getAttemptsPendingReview() {
-        ArrayList<Intent> intents = new ArrayList<>();
-        String sql = "SELECT Intents.Id, Intents.IdUsuari, Usuaris.Nom,"
-                + " Intents.IdExercici, Exercicis.NomExercici, Timestamp_Inici,"
-                + " Timestamp_Fi, VideoFile"
-                + " FROM Intents INNER JOIN Usuaris ON Intents.IdUsuari=Usuaris.Id"
-                + " INNER JOIN Exercicis ON Intents.IdExercici=Exercicis.Id"
-                + " WHERE Intents.Id NOT IN"
-                + " (SELECT IdIntent FROM Review)"
-                + " ORDER BY Timestamp_Inici";
-        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
 
-            ResultSet resultSet = selectStatement.executeQuery();
+public ArrayList<Intent> getAttemptsPendingReview() {
+    ArrayList<Intent> intents = new ArrayList<>();
+    String sql = "SELECT Intents.Id, Intents.IdUsuari, Intents.IdExercici"
+               + " FROM Intents"
+               + " WHERE Intents.Id NOT IN (SELECT IdIntent FROM Review)" // subquery para los intentos que no esten en la tabla Reviews
+               + " ORDER BY Timestamp_Inici";
+    try (Connection connection = getConnection();
+         PreparedStatement selectStatement = connection.prepareStatement(sql)) {
 
-            while (resultSet.next()) {
-                Intent attempt = new Intent();
-                attempt.setId(resultSet.getInt("Id"));
-                attempt.setIdUsuari(resultSet.getInt("IdUsuari"));
-                attempt.setNomUsuari(resultSet.getString("Nom"));
-                attempt.setIdExercici(resultSet.getInt("IdExercici"));
-                attempt.setNomExercici(resultSet.getString("NomExercici"));
-                attempt.setTimestamp_Inici(resultSet.getString("Timestamp_Inici"));
-                attempt.setTimestamp_Fi(resultSet.getString("Timestamp_Fi"));
-                attempt.setVideofile(resultSet.getString("VideoFile"));
-                intents.add(attempt);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ResultSet resultSet = selectStatement.executeQuery();
+        while (resultSet.next()) {
+            Intent attempt = new Intent();
+            attempt.setId(resultSet.getInt("Id"));
+            attempt.setIdUsuari(resultSet.getInt("IdUsuari"));
+            attempt.setIdExercici(resultSet.getInt("IdExercici"));
+            intents.add(attempt);
         }
-        return intents;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    
+    return intents;
+}
     
     // Método adicional para filtrar intentos por usuario
 public ArrayList<Intent> getAttemptsPendingReviewByUser(int idUsuario) {
@@ -188,6 +179,18 @@ public ArrayList<Intent> getAttemptsPendingReviewByUser(int idUsuario) {
         }
     }
     return userAttempts;
+}
+
+public String getAttemptsPendingReviewText() {
+    StringBuilder text = new StringBuilder();
+    text.append("ID Intent\tID Usuari\tID Exercici\n"); // Agrega los nombres de las columnas
+
+    for (Intent intento : getAttemptsPendingReview()) {
+        text.append(intento.getId()).append("\t")
+            .append(intento.getIdUsuari()).append("\t")
+            .append(intento.getIdExercici()).append("\n");
+    }
+    return text.toString();
 }
 
     public int insertReview(Review r) {

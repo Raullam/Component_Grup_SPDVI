@@ -6,7 +6,10 @@ package cat.paucasesnovescifp.jframes;
 
 import cat.paucasesnovescifp.simulapinstructor.dataaccess.DataAccess;
 import cat.paucasesnovescifp.simulapinstructor.models.Intent;
+import cat.paucasesnovescifp.simulapinstructor.models.Review;
 import cat.paucasesnovescifp.simulapinstructor.models.Usuari;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,13 +31,21 @@ public class Frame2 extends javax.swing.JFrame {
     /**
      * Creates new form Frame2
      */
-    
     DefaultTableModel dtm = new DefaultTableModel();
     DataAccess da = new DataAccess();
     private boolean dataChanged = false;
+    private String nomInstructor;
+    
+    // Constructor que recibe el ID del instructor logueado
+    public Frame2(String nomInstructor) {
+        this(); 
+        this.nomInstructor = nomInstructor;
+}
     
     public Frame2() {
         initComponents();
+        
+        txtAreaIntents.setText(da.getAttemptsPendingReviewText()); // cargar intentos pendientes de revision al txtArea
         
         jTableUsuaris.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
@@ -81,7 +92,7 @@ public class Frame2 extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         BotonRead = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BotonRevision = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableUsuaris = new javax.swing.JTable();
         BotonVideo = new javax.swing.JButton();
@@ -92,8 +103,12 @@ public class Frame2 extends javax.swing.JFrame {
         BotonDelete = new javax.swing.JButton();
         BotonUpdate = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaIntents = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
+        txtFieldValoracio = new javax.swing.JTextField();
+        txtFieldComentari = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -101,17 +116,17 @@ public class Frame2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        BotonRead.setText("READ");
+        BotonRead.setText("Carregar Usuaris");
         BotonRead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonReadActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Enviar Revisión");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        BotonRevision.setText("Enviar Revisió");
+        BotonRevision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                BotonRevisionActionPerformed(evt);
             }
         });
 
@@ -137,7 +152,7 @@ public class Frame2 extends javax.swing.JFrame {
 
         jLabel1.setText("Usuaris");
 
-        jLabel2.setText("Intents");
+        jLabel2.setText("Exercicis");
 
         jTableIntents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,94 +167,142 @@ public class Frame2 extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(jTableIntents);
 
-        BotonDelete.setText("BORRAR");
+        BotonDelete.setText("Eliminar");
         BotonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonDeleteActionPerformed(evt);
             }
         });
 
-        BotonUpdate.setText("EDITAR");
+        BotonUpdate.setText("Editar");
         BotonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonUpdateActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaIntents.setColumns(20);
+        txtAreaIntents.setRows(5);
+        txtAreaIntents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAreaIntentsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtAreaIntents);
 
-        jLabel3.setText("Pendent de Revisió");
+        jLabel3.setText("Intents Pendents de Revisió");
+
+        txtFieldValoracio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldValoracioActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Valoracio:");
+
+        jLabel5.setText("Comentari:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(BotonRead, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(BotonDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotonUpdate)
+                        .addGap(24, 24, 24)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonRead)
-                                .addGap(110, 110, 110)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(103, 103, 103))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton2)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGap(116, 116, 116)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(BotonDelete)
-                        .addGap(110, 110, 110)
-                        .addComponent(BotonUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotonRevision)
+                        .addGap(364, 364, 364)
                         .addComponent(BotonVideo)))
                 .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonRead)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BotonDelete)
-                            .addComponent(BotonUpdate))
-                        .addGap(38, 38, 38))
+                            .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(BotonRead)
+                        .addGap(3, 3, 3)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BotonVideo)
-                        .addGap(23, 23, 23))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108))
+                        .addGap(23, 23, 23))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BotonUpdate)
+                                    .addComponent(BotonDelete))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BotonRevision)
+                        .addContainerGap(16, Short.MAX_VALUE))))
         );
 
         pack();
@@ -275,10 +338,44 @@ public class Frame2 extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_BotonVideoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BotonRevisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRevisionActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        // Obtener el ID del intento seleccionado desde el botón
+    int idIntent = (int) BotonRevision.getClientProperty("idIntent"); 
+    int valoracio = Integer.parseInt(txtFieldValoracio.getText());
+    String comentari = txtFieldComentari.getText();
+    
+    
+    // Validar que la valoración sea un número del 1 al 5
+    try {
+        if (valoracio < 1 || valoracio > 5) {
+            JOptionPane.showMessageDialog(null, "La valoración debe ser un número entre 1 y 5.");
+            return;
+        }
+    
+    // Suponiendo que tienes el ID del reviewer (instructor que ha hecho login) en una variable
+    int idReviewer = obtenerIdInstructorLogueado();
+
+    // Crear el objeto Review y asignar los datos
+    Review review = new Review();
+    review.setIdIntent(idIntent);
+    review.setIdReviewer(idReviewer);
+    review.setValoracio(valoracio);
+    review.setComentari(comentari);
+
+    // Llamar a insertReview para insertar la review en la base de datos
+    int result = da.insertReview(review);
+    if (result > 0) {
+        // Actualiza el JTextArea para eliminar la fila correspondiente
+            txtAreaIntents.setText(da.getAttemptsPendingReviewText());
+        JOptionPane.showMessageDialog(this, "Review insertada correctamente con ID: " + result);
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al insertar la review.");
+    }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "La valoración debe ser un número válido.");
+}
+    }//GEN-LAST:event_BotonRevisionActionPerformed
 
     private void BotonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonDeleteActionPerformed
         // TODO add your handling code here:
@@ -320,22 +417,19 @@ public class Frame2 extends javax.swing.JFrame {
             if (us.getId() == id) {
                 String Nom = (String) jTableUsuaris.getValueAt(selectedRow, 1);
                 String email = (String) jTableUsuaris.getValueAt(selectedRow, 2); 
-                
+
                 // Si detectamos cambios en 'NOM' o 'EMAIL'
                 if (!us.getNom().equals(Nom)) {
                     us.setNom(Nom);
                     dataChanged = true;
                 }
-                
                 if (!us.getEmail().equals(email)) {
                     us.setEmail(email);
                     dataChanged = true;
                 }
-
                 if (dataChanged) {
                     da.updateUsuaris(us);
                 }
-                
                 break;
             }
         }
@@ -349,6 +443,40 @@ public class Frame2 extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_BotonUpdateActionPerformed
 
+    private void txtFieldValoracioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldValoracioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldValoracioActionPerformed
+
+    private void txtAreaIntentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAreaIntentsMouseClicked
+        // TODO add your handling code here:
+        String selectedText = txtAreaIntents.getSelectedText();
+    if (selectedText != null) {
+        // Extrae el ID del intento seleccionado
+        String[] columns = selectedText.split("\t");
+        try {
+            int idIntent = Integer.parseInt(columns[0]);  // Asumiendo que la primera columna es el ID del intento
+            txtAreaIntents.setToolTipText("Intento seleccionado: " + idIntent);
+
+            // Guarda el ID del intento para usarlo en la inserción
+            BotonRevision.putClientProperty("idIntent", idIntent);
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir el ID del intento: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_txtAreaIntentsMouseClicked
+
+    private int obtenerIdInstructorLogueado() {
+    ArrayList<Usuari> instructors = da.getInstructors();
+
+    for (Usuari instructor : instructors) {
+        if (instructor.getNom().equals(nomInstructor)) {
+            return instructor.getId();
+        }
+    }
+    throw new IllegalStateException("Instructor logueado no encontrado");
+}
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -388,19 +516,23 @@ public class Frame2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonDelete;
     private javax.swing.JButton BotonRead;
+    private javax.swing.JButton BotonRevision;
     private javax.swing.JButton BotonUpdate;
     private javax.swing.JButton BotonVideo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTableIntents;
     private javax.swing.JTable jTableUsuaris;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea txtAreaIntents;
+    private javax.swing.JTextField txtFieldComentari;
+    private javax.swing.JTextField txtFieldValoracio;
     // End of variables declaration//GEN-END:variables
 }
