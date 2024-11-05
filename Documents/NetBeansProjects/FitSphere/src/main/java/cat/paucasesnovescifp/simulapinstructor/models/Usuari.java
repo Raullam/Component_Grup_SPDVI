@@ -17,7 +17,7 @@ public class Usuari {
 
     public Usuari(){
     }
-
+    
     public Usuari(int id, String nom, String email, String passwordHash, boolean instructor) {
         this.id = id;
         this.nom = nom;
@@ -70,5 +70,5 @@ public class Usuari {
     public void setInstructor(boolean instructor) {
         this.instructor = instructor;
     }
-
+    
 }

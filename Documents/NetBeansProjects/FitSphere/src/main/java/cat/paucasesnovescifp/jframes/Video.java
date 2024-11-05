@@ -5,12 +5,9 @@
 package cat.paucasesnovescifp.jframes;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
@@ -25,13 +22,13 @@ public class Video extends javax.swing.JFrame {
     private EmbeddedMediaPlayerComponent mp;
     private JFileChooser fc = new JFileChooser();
     private boolean isPlaying = false;
-    
+
     public Video() {
         initComponents();
         fc = new JFileChooser();
         mp = new EmbeddedMediaPlayerComponent();
-        VideoPanel.add(mp,BorderLayout.CENTER);
-       
+        VideoPanel.add(mp, BorderLayout.CENTER);
+
     }
 
     /**
@@ -149,13 +146,13 @@ public class Video extends javax.swing.JFrame {
     private void BotonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonPauseActionPerformed
         // TODO add your handling code here:
         if (isPlaying) {
-    mp.mediaPlayer().controls().pause();
-    isPlaying = false;
-    BotonPause.setText("Resume");
-} else {
-    mp.mediaPlayer().controls().start();
-    isPlaying = true;
-    BotonPause.setText("Pause");
+            mp.mediaPlayer().controls().pause();
+            isPlaying = false;
+            BotonPause.setText("Resume");
+        } else {
+            mp.mediaPlayer().controls().start();
+            isPlaying = true;
+            BotonPause.setText("Pause");
         }
     }//GEN-LAST:event_BotonPauseActionPerformed
 
@@ -163,7 +160,7 @@ public class Video extends javax.swing.JFrame {
         // TODO add your handling code here:
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int result = fc.showOpenDialog(this);
-        
+
         if (result == JFileChooser.APPROVE_OPTION) {
             txtVideosPath.setText(fc.getSelectedFile().getAbsolutePath());
             File vf = new File(fc.getSelectedFile().getAbsolutePath());
@@ -184,15 +181,15 @@ public class Video extends javax.swing.JFrame {
         if (evt.getValueIsAdjusting()) {
             return;
         }
-                    
+
         String vff = fc.getSelectedFile().getAbsolutePath();
         String vfap = vff + "\\" + jList1.getSelectedValue();
         mp.mediaPlayer().media().play(vfap);
-        
+
     }//GEN-LAST:event_jList1ValueChanged
 
     private void txtVideosPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVideosPathActionPerformed
- // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtVideosPathActionPerformed
 
     /**
@@ -227,7 +224,7 @@ public class Video extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new Video().setVisible(true);
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

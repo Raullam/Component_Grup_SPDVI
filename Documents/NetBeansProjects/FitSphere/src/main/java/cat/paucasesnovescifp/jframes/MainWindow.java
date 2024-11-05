@@ -5,6 +5,11 @@
 package cat.paucasesnovescifp.jframes;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  *
@@ -19,7 +24,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         // Configurar el JFrame
         setTitle("Main Window");
-        setBounds(100, 100, 400, 375); // Definir la posición y tamaño del JFrame
+        setBounds(550, 200, 400, 375); // Definir la posición y tamaño del JFrame
         setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
         setLayout(null); // Usar null layout para colocar manualmente los componentes
         getContentPane().setBackground(Color.LIGHT_GRAY);
@@ -44,9 +49,14 @@ public class MainWindow extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(400, 300));
         getContentPane().setLayout(null);
 
-        jLabel1.setText("Enlace a la página web");
+        jLabel1.setText("<html><u>Fes clic aquí per visitar el lloc web</u></html>");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(126, 251, 140, 16);
+        jLabel1.setBounds(100, 240, 220, 16);
 
         BotonLogin.setText("Login");
         BotonLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -55,11 +65,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BotonLogin);
-        BotonLogin.setBounds(276, 273, 72, 23);
+        BotonLogin.setBounds(280, 270, 72, 23);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aleja\\Pictures\\Screenshots\\fitspherechiki.png")); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(96, 59, 191, 180);
+        jLabel2.setBounds(100, 50, 191, 180);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -70,6 +80,20 @@ public class MainWindow extends javax.swing.JFrame {
         log.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BotonLoginActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+         // Cambiar el cursor a una mano para simular un enlace
+    jLabel1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+    // Intentar abrir la URL al hacer clic en el JLabel
+    try {
+        Desktop.getDesktop().browse(new URI("https://thefitsphere.com/en/homepage/")); // Cambia la URL por la que desees abrir
+    } catch (IOException | URISyntaxException ex) {
+        ex.printStackTrace(); // Manejo de excepciones
+    }
+
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
