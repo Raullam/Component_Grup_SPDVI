@@ -10,7 +10,6 @@ import cat.paucasesnovescifp.simulapinstructor.models.Usuari;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author aleja
@@ -22,7 +21,7 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
-        
+
         // Configurar el JFrame
         setTitle("Register");
         setBounds(550, 200, 400, 375); // Definir la posición y tamaño del JFrame
@@ -147,19 +146,19 @@ public class Register extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-   
+
         Usuari u = new Usuari();
         u.setNom(NomTextField.getText());
         u.setEmail(EmailTextField.getText());
         String passwordHash = BCrypt.withDefaults().hashToString(12, PasswordField.getPassword());
         u.setPasswordHash(passwordHash);
         u.setInstructor(InstructorCheckbox.isSelected());
-        
+
         DataAccess da = new DataAccess();
         da.registerUser(u);
-        
+
         JOptionPane.showMessageDialog(this, "Usuari amb id " + da.getMaxID() + " afegit correctamemnt", "Info", JOptionPane.INFORMATION_MESSAGE);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void EmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextFieldActionPerformed

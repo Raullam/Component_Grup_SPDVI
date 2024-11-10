@@ -14,32 +14,6 @@
     
     
     <dependencies>
-    <!-- Dependencia principal de JavaFX -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>11.0.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>11.0.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-media</artifactId>
-        <version>11.0.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-web</artifactId>
-        <version>11.0.2</version>
-    </dependency>
-<dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-swing</artifactId>
-        <version>11.0.2</version> <!-- Usa la misma versión de JavaFX que el resto -->
-    </dependency>
     
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -47,24 +21,24 @@
             <version>12.8.1.jre11</version>
         </dependency>
         
-<dependency>
-    <groupId>at.favre.lib</groupId>
-    <artifactId>bcrypt</artifactId>
-    <version>0.10.2</version>
-</dependency>
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>0.10.2</version>
+        </dependency>
 
-<dependency>
-    <groupId>com.googlecode.jfilechooser-bookmarks</groupId>
-    <artifactId>jfilechooser-bookmarks</artifactId>
-    <version>0.1.0</version>
-</dependency>
+        <dependency>
+            <groupId>com.googlecode.jfilechooser-bookmarks</groupId>
+            <artifactId>jfilechooser-bookmarks</artifactId>
+            <version>0.1.0</version>
+        </dependency>
 
-<dependency>
-    <groupId>uk.co.caprica</groupId>
-    <artifactId>vlcj</artifactId>
-    <version>4.8.2</version>
-</dependency>
+        <dependency>
+            <groupId>uk.co.caprica</groupId>
+            <artifactId>vlcj</artifactId>
+            <version>4.8.2</version>
+        </dependency>
     
-</dependencies>
+    </dependencies>
     
 </project>

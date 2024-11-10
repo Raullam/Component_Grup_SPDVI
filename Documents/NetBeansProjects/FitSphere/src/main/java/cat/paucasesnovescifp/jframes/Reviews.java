@@ -6,6 +6,7 @@ package cat.paucasesnovescifp.jframes;
 
 import cat.paucasesnovescifp.simulapinstructor.dataaccess.DataAccess;
 import cat.paucasesnovescifp.simulapinstructor.models.Review;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,13 @@ public class Reviews extends javax.swing.JFrame {
 
     public Reviews() {
         initComponents();
+        
+        // Configurar el JFrame
+        setTitle("Reviews");
+        setBounds(500, 175, 525, 450); // Definir la posición y tamaño del JFrame
+        setDefaultCloseOperation(GestioUsuaris.EXIT_ON_CLOSE);
+        setLayout(null); // Usar null layout para colocar manualmente los componentes
+        getContentPane().setBackground(Color.LIGHT_GRAY);
     }
 
     /**

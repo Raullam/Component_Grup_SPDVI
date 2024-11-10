@@ -40,17 +40,17 @@ public class GestioUsuaris extends javax.swing.JFrame {
         this();
         this.nomInstructor = nomInstructor;
     }
-
+    
     public GestioUsuaris() {
         initComponents();
 
         // Configurar el JFrame
         setTitle("GestioUsuaris");
-        setBounds(200, 100, 1100, 700); // Definir la posición y tamaño del JFrame
+        setBounds(200, 100, 1100, 575); // Definir la posición y tamaño del JFrame
         setDefaultCloseOperation(GestioUsuaris.EXIT_ON_CLOSE);
         setLayout(null); // Usar null layout para colocar manualmente los componentes
         getContentPane().setBackground(Color.LIGHT_GRAY);
-
+        
         txtAreaIntents.setText(da.getAttemptsPendingReviewText()); // cargar intentos pendientes de revision al txtArea
 
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent(); // media player para el video JPanel
@@ -98,7 +98,7 @@ public class GestioUsuaris extends javax.swing.JFrame {
                 }
             }
         });
-
+        
     }
 
     /**
@@ -116,7 +116,6 @@ public class GestioUsuaris extends javax.swing.JFrame {
         BotonRevision = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableUsuaris = new javax.swing.JTable();
-        BotonVideo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -168,13 +167,6 @@ public class GestioUsuaris extends javax.swing.JFrame {
             }
         ));
         jScrollPane4.setViewportView(jTableUsuaris);
-
-        BotonVideo.setText("Ir al Video");
-        BotonVideo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonVideoActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Usuaris");
@@ -275,17 +267,14 @@ public class GestioUsuaris extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(BotonSignOut)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(BotonVideo))))
+                                .addComponent(BotonSignOut)))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(97, 97, 97)
                             .addComponent(BotonRead, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(54, 54, 54)
                         .addComponent(BotonDelete)
-                        .addGap(57, 57, 57)
+                        .addGap(69, 69, 69)
                         .addComponent(BotonUpdate)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -295,22 +284,23 @@ public class GestioUsuaris extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(BotonRevision)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(BotonRevision1))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BotonRevision)
+                                .addGap(18, 18, 18)
+                                .addComponent(BotonRevision1)
+                                .addGap(36, 36, 36)))))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -321,64 +311,60 @@ public class GestioUsuaris extends javax.swing.JFrame {
                         .addComponent(BotonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(283, 283, 283)
-                                .addComponent(BotonRead)
-                                .addGap(12, 12, 12))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(283, 283, 283)
+                        .addComponent(BotonRead)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotonUpdate)
-                            .addComponent(BotonDelete)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BotonDelete))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(BotonSignOut)
-                                    .addComponent(BotonVideo)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(BotonRevision)
-                                    .addComponent(BotonRevision1)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(BotonSignOut))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtFieldValoracio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtFieldComentari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(BotonRevision)
+                                            .addComponent(BotonRevision1))
+                                        .addGap(21, 21, 21))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotonPause))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(panelVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BotonPause))))
+                        .addContainerGap(18, Short.MAX_VALUE))))
         );
 
         pack();
@@ -386,16 +372,18 @@ public class GestioUsuaris extends javax.swing.JFrame {
 
     private void BotonReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonReadActionPerformed
         // TODO add your handling code here:
+        // Crear el modelo de la tabla para jTableReviews
+        DefaultTableModel dtm2 = new DefaultTableModel();
         ArrayList<Usuari> usuaris = da.getAllUsers();
 
         // Añadir las columnas al modelo
-        dtm.addColumn("Id Usuari");
-        dtm.addColumn("Nom");
-        dtm.addColumn("Email");
+        dtm2.addColumn("Id Usuari");
+        dtm2.addColumn("Nom");
+        dtm2.addColumn("Email");
 
         // Añadir filas al modelo
         for (Usuari u : usuaris) {
-            dtm.addRow(new Object[]{
+            dtm2.addRow(new Object[]{
                 u.getId(),
                 u.getNom(),
                 u.getEmail()
@@ -403,16 +391,9 @@ public class GestioUsuaris extends javax.swing.JFrame {
         }
 
         // Asignar el modelo a la JTable
-        jTableUsuaris.setModel(dtm);
+        jTableUsuaris.setModel(dtm2);
 
     }//GEN-LAST:event_BotonReadActionPerformed
-
-    private void BotonVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVideoActionPerformed
-        // TODO add your handling code here:
-        Video f3 = new Video();
-        f3.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_BotonVideoActionPerformed
 
     private void BotonRevisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRevisionActionPerformed
         // TODO add your handling code here:
@@ -455,7 +436,7 @@ public class GestioUsuaris extends javax.swing.JFrame {
     private void BotonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRow = jTableUsuaris.getSelectedRow();
-
+        
         if (selectedRow != -1) {  // Verifica si hay una fila seleccionada
             int id = (int) jTableUsuaris.getValueAt(selectedRow, 0); // Suponiendo que la columna 0 es 'Id'
 
@@ -464,7 +445,7 @@ public class GestioUsuaris extends javax.swing.JFrame {
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setInt(1, id);
                 int rowsAffected = stmt.executeUpdate();
-
+                
                 if (rowsAffected > 0) {
                     dtm.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(null, "Fila eliminada correctamente.");
@@ -482,12 +463,12 @@ public class GestioUsuaris extends javax.swing.JFrame {
     private void BotonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonUpdateActionPerformed
         // TODO add your handling code here:
         ArrayList<Usuari> usuaris = da.getAllUsers();
-
+        
         int selectedRow = jTableUsuaris.getSelectedRow(); // Obtiene la fila seleccionada
 
         if (selectedRow != -1) {  // Verifica si hay una fila seleccionada
             int id = (int) jTableUsuaris.getValueAt(selectedRow, 0);
-
+            
             for (Usuari us : usuaris) {
                 if (us.getId() == id) {
                     String Nom = (String) jTableUsuaris.getValueAt(selectedRow, 1);
@@ -583,7 +564,7 @@ public class GestioUsuaris extends javax.swing.JFrame {
             BotonPause.setText("Pause");
         }
     }//GEN-LAST:event_BotonPauseActionPerformed
-
+    
     private void cargarYReproducirVideo(String videoFileName) {
 
         // Asegúrate de agregar una barra invertida entre la carpeta y el nombre del archivo
@@ -598,10 +579,10 @@ public class GestioUsuaris extends javax.swing.JFrame {
         // Cargar y reproducir el video
         mediaPlayerComponent.mediaPlayer().media().play(videoPath);
     }
-
+    
     private int obtenerIdInstructorLogueado() {
         ArrayList<Usuari> instructors = da.getInstructors();
-
+        
         for (Usuari instructor : instructors) {
             if (instructor.getNom().equals(nomInstructor)) {
                 return instructor.getId();
@@ -658,7 +639,6 @@ public class GestioUsuaris extends javax.swing.JFrame {
     private javax.swing.JButton BotonRevision1;
     private javax.swing.JButton BotonSignOut;
     private javax.swing.JButton BotonUpdate;
-    private javax.swing.JButton BotonVideo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
