@@ -67,7 +67,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().add(BotonLogin);
         BotonLogin.setBounds(280, 270, 72, 23);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cat/paucasesnovescifp/fitsphere/logo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aleja\\Documents\\NetBeansProjects\\FitSphere\\logo.png")); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(100, 50, 191, 180);
 
