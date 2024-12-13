@@ -23,6 +23,7 @@ import spdvi.componentimatge.ImagePanel;
 import spdvi.logica.CarregarImatge;
 import spdvi.logica.NetejarImatge;
 import spdvi.logica.RedimensionarImatge;
+import spdvi.logica.RotarImatge;
 /*TOMPARE NO TE NAS*/
 public class ImagePanelAzure extends JFrame {
     private ImagePanel imagePanel;
@@ -72,7 +73,7 @@ public class ImagePanelAzure extends JFrame {
         btnLoad.addActionListener(e -> CarregarImatge.cargarImagen(containerName, connectionString, bufferedImages, imagePaths, currentIndex, imagePanel));
         btnResize.addActionListener(e -> RedimensionarImatge.redimensionarImagen(imagePanel,this));
         btnClear.addActionListener(e -> NetejarImatge.limpiarImagen(imagePanel));
-        btnRotate.addActionListener(e -> rotarImagen());
+        btnRotate.addActionListener(e -> RotarImatge.rotarImagen(imagePanel));
         btnSave.addActionListener(e -> guardarImagenPC());
         btnUpload.addActionListener(e -> selectAndSaveImage());
         btnNext.addActionListener(e -> mostrarSiguienteImagen());
@@ -86,10 +87,6 @@ public class ImagePanelAzure extends JFrame {
 
     private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
 
-
-    private void rotarImagen() {
-        imagePanel.rotateImage(90); // Rotar 90 grados
-    }
 
     private void guardarImagenPC() {
         JFileChooser fileChooser = new JFileChooser();

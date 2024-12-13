@@ -4,10 +4,16 @@
  */
 package spdvi.logica;
 
+import spdvi.componentimatge.ImagePanel;
+
 /**
  *
  * @author Rulox
  */
 public class RotarImatge {
+    
+    public static void rotarImagen(ImagePanel imagePanel) {
+        imagePanel.rotateImage(90); // Rotar 90 grados
+    }
     
 }
