@@ -1,7 +1,7 @@
-spdvi\componentimatge\ComponentImatgeFrame.class
-spdvi\componentimatge\ImageViewerArray$1.class
-spdvi\componentimatge\ComponentImatgeFrame$1.class
-spdvi\componentimatge\ImageViewerArray.class
+spdvi/componentimatge/ImageViewerArray$1.class
+spdvi/componentimatge/ComponentImatgeFrame.class
+spdvi/componentimatge/ComponentImatgeFrame$1.class
+spdvi/componentimatge/ImageViewerArray.class
+spdvi/componentimatge/AzureBlobService.class
 ImagePanelAzure.class
-spdvi\componentimatge\ImagePanel.class
-spdvi\componentimatge\AzureBlobService.class
+spdvi/componentimatge/ImagePanel.class
