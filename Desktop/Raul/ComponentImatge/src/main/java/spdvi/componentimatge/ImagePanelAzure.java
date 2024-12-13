@@ -1,3 +1,5 @@
+package spdvi.componentimatge;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -29,7 +31,10 @@ public class ImagePanelAzure extends JFrame {
     private int currentIndex = 0; // Índice de la imagen actual
     private final String connectionString = "DefaultEndpointsProtocol=https;AccountName=alejandrostorage1;AccountKey=lE5g6+hiDokS8nYgZ9RGcXexPo6wqGWMrho4IiKYEU+9CAJysciPs2q+VHDsoWQ41bfFMAcCmG+h+ASto4i3KQ==;EndpointSuffix=core.windows.net";
     private final String containerName = "images";
-    
+    private BufferedImage currentImage;
+    private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
+    AzureBlobService blobService = new AzureBlobService(connectionString);
+
     public ImagePanelAzure() {
         setTitle("Image Viewer Mejorado");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,8 +46,8 @@ public class ImagePanelAzure extends JFrame {
         // Crear los botones
         btnLoad = new JButton("Cargar Imagen");
         btnResize = new JButton("Redimensionar");
-        btnFiltre = new JButton("Aplica filtre");
-        btnGray = new JButton("Escala de Grisos");
+        btnFiltre = new JButton("Aplica Opacidad");
+        btnGray = new JButton("Escala de Grises");
         btnClear = new JButton("Limpiar Imagen");
         btnRotate = new JButton("Rotar Imagen");
         btnSave = new JButton("Guardar Imagen");
@@ -71,7 +76,6 @@ public class ImagePanelAzure extends JFrame {
         // Añadir funcionalidad a los botones
         btnLoad.addActionListener(e -> cargarImagen());
         btnResize.addActionListener(e -> redimensionarImagen());
-        // Acció per aplicar filtres a la imatge
         btnFiltre.addActionListener(e -> applyFilter(() -> applyOpacityFilter(0.5f)));
         btnGray.addActionListener(e -> applyFilter(this::applyGrayscaleFilter));
         btnClear.addActionListener(e -> limpiarImagen());
@@ -87,64 +91,55 @@ public class ImagePanelAzure extends JFrame {
         setLocationRelativeTo(null); // Centrar ventana
     }
 
-    private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
-
-    
     private void cargarImagen() {
-    BlobContainerClient containerClient = new BlobServiceClientBuilder()
-            .connectionString(connectionString)
-            .buildClient()
-            .getBlobContainerClient(containerName);
+        BlobContainerClient containerClient = new BlobServiceClientBuilder()
+                .connectionString(connectionString)
+                .buildClient()
+                .getBlobContainerClient(containerName);
 
-    bufferedImages.clear(); // Limpia las imágenes cargadas previamente
+        bufferedImages.clear();
+        
+        for (BlobItem blobItem : containerClient.listBlobs()) {
+            try {
+                BlobClient blobClient = containerClient.getBlobClient(blobItem.getName());
+                byte[] imageData = blobClient.downloadContent().toBytes();
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(imageData);
+                BufferedImage img = ImageIO.read(imageStream);
 
-    // Iterar sobre los blobs en el contenedor
-    for (BlobItem blobItem : containerClient.listBlobs()) {
-        try {
-            BlobClient blobClient = containerClient.getBlobClient(blobItem.getName());
-            // Descargar el contenido del blob como un array de bytes
-            byte[] imageData = blobClient.downloadContent().toBytes();
-
-            // Convertir el array de bytes en un BufferedImage
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(imageData);
-            BufferedImage img = ImageIO.read(imageStream); // Lee la imagen desde el flujo de bytes
-
-            if (img != null) {
-                bufferedImages.add(img); // Agrega la imagen a la lista
-                imagePaths.add(blobItem.getName()); // Agrega el nombre del archivo si es necesario
+                if (img != null) {
+                    bufferedImages.add(img);
+                    imagePaths.add(blobItem.getName());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        }
+
+        if (!bufferedImages.isEmpty()) {
+            currentIndex = 0;
+            currentImage = bufferedImages.get(currentIndex);
+            imagePanel.loadImage2(currentImage);
         }
     }
 
-    // Asegúrate de que haya imágenes en la lista
-    if (!bufferedImages.isEmpty()) {
-        currentIndex = 0; // Inicializa al primer índice
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la primera imagen
-    }
-}
-
-    // Mètode genèric per aplicar un filtre
     private void applyFilter(Runnable filterAction) {
         if (currentImage != null) {
             try {
                 filterAction.run();
-                displayImage();
+                imagePanel.loadImage2(currentImage);
             } catch (IllegalArgumentException ex) {
-                showError(ex.getMessage());
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showError("No hi ha cap imatge carregada.");
+            JOptionPane.showMessageDialog(this, "No hay ninguna imagen cargada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void applyOpacityFilter(float opacity) {
         if (opacity < 0.0f || opacity > 1.0f) {
-            throw new IllegalArgumentException("L'opacitat ha d'estar entre 0.0 i 1.0");
+            throw new IllegalArgumentException("La opacidad debe estar entre 0.0 y 1.0");
         }
 
-        // Crear una imatge transparent amb fons negre
         BufferedImage transparentImage = new BufferedImage(
                 currentImage.getWidth(),
                 currentImage.getHeight(),
@@ -152,42 +147,29 @@ public class ImagePanelAzure extends JFrame {
         );
         Graphics2D g2d = transparentImage.createGraphics();
 
-        // Pintar el fons negre
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, currentImage.getWidth(), currentImage.getHeight());
-
-        // Aplicar la imatge actual amb l'opacitat
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
         g2d.drawImage(currentImage, 0, 0, null);
-
-        // Finalitzar els gràfics
         g2d.dispose();
 
-        // Actualitzar la imatge actual
         currentImage = transparentImage;
     }
 
     private void applyGrayscaleFilter() {
-    for (int x = 0; x < currentImage.getWidth(); x++) {
-        for (int y = 0; y < currentImage.getHeight(); y++) {
-            int rgb = currentImage.getRGB(x, y);
+        for (int x = 0; x < currentImage.getWidth(); x++) {
+            for (int y = 0; y < currentImage.getHeight(); y++) {
+                int rgb = currentImage.getRGB(x, y);
+                int alpha = (rgb >> 24) & 0xFF;
+                int r = (rgb >> 16) & 0xFF;
+                int g = (rgb >> 8) & 0xFF;
+                int b = rgb & 0xFF;
 
-            // Extraer componentes RGBA
-            int alpha = (rgb >> 24) & 0xFF;
-            int r = (rgb >> 16) & 0xFF;
-            int g = (rgb >> 8) & 0xFF;
-            int b = rgb & 0xFF;
+                int gray = (r + g + b) / 3;
+                int newRgb = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
 
-            // Calcular escala de grises
-            int gray = (r + g + b) / 3;
-
-            // Reconstruir el valor RGB preservando el alfa
-            int newRgb = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
-
-            currentImage.setRGB(x, y, newRgb);
+                currentImage.setRGB(x, y, newRgb);
+            }
         }
     }
-}
 
     private void redimensionarImagen() {
         String inputWidth = JOptionPane.showInputDialog(this, "Introduce el ancho:");
@@ -201,9 +183,8 @@ public class ImagePanelAzure extends JFrame {
         }
     }
 
-
     private void rotarImagen() {
-        imagePanel.rotateImage(90); // Rotar 90 grados
+        imagePanel.rotateImage(90);
     }
 
     private void guardarImagenPC() {
@@ -214,9 +195,6 @@ public class ImagePanelAzure extends JFrame {
             imagePanel.saveImage(outputPath);
         }
     }
-    
-    private BufferedImage currentImage;
-    AzureBlobService blobService = new AzureBlobService(connectionString);
 
 public void selectAndSaveImage() {
         // Abrir el JFileChooser para seleccionar la imagen
@@ -249,28 +227,27 @@ public void selectAndSaveImage() {
             }
         }
     }
-    
+
     private void limpiarImagen() {
         imagePanel.clearImage();
+        currentImage = null;
     }
-    
+
     private void mostrarSiguienteImagen() {
-    if (!bufferedImages.isEmpty()) {
-        // Incrementar el índice y asegurarse de que no se desborde
-        currentIndex = (currentIndex + 1) % bufferedImages.size();
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la siguiente imagen
+        if (!bufferedImages.isEmpty()) {
+            currentIndex = (currentIndex + 1) % bufferedImages.size();
+            currentImage = bufferedImages.get(currentIndex);
+            imagePanel.loadImage2(currentImage);
+        }
     }
-}
 
-private void mostrarImagenAnterior() {
-    if (!bufferedImages.isEmpty()) {
-        // Decrementar el índice y asegurarse de que no se desborde
-        currentIndex = (currentIndex - 1 + bufferedImages.size()) % bufferedImages.size();
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la imagen anterior
+    private void mostrarImagenAnterior() {
+        if (!bufferedImages.isEmpty()) {
+            currentIndex = (currentIndex - 1 + bufferedImages.size()) % bufferedImages.size();
+            currentImage = bufferedImages.get(currentIndex);
+            imagePanel.loadImage2(currentImage);
+        }
     }
-}
-
-    // Otros métodos (redimensionar, rotar, limpiar, etc.) se mantienen iguales
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
