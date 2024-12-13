@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import spdvi.componentimatge.AzureBlobService;
 import spdvi.componentimatge.ImagePanel;
 import spdvi.logica.CarregarImatge;
+import spdvi.logica.RedimensionarImatge;
 /*TOMPARE NO TE NAS*/
 public class ImagePanelAzure extends JFrame {
     private ImagePanel imagePanel;
@@ -68,7 +69,7 @@ public class ImagePanelAzure extends JFrame {
 
         // Añadir funcionalidad a los botones
         btnLoad.addActionListener(e -> CarregarImatge.cargarImagen(containerName, connectionString, bufferedImages, imagePaths, currentIndex, imagePanel));
-        btnResize.addActionListener(e -> redimensionarImagen());
+        btnResize.addActionListener(e -> RedimensionarImatge.redimensionarImagen(imagePanel,this));
         btnClear.addActionListener(e -> limpiarImagen());
         btnRotate.addActionListener(e -> rotarImagen());
         btnSave.addActionListener(e -> guardarImagenPC());
@@ -83,19 +84,6 @@ public class ImagePanelAzure extends JFrame {
     }
 
     private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
-
-
-    private void redimensionarImagen() {
-        String inputWidth = JOptionPane.showInputDialog(this, "Introduce el ancho:");
-        String inputHeight = JOptionPane.showInputDialog(this, "Introduce la altura:");
-        try {
-            int width = Integer.parseInt(inputWidth);
-            int height = Integer.parseInt(inputHeight);
-            imagePanel.resizeImage(width, height);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, introduce números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
 
     private void rotarImagen() {
@@ -174,4 +162,6 @@ private void mostrarImagenAnterior() {
             frame.setVisible(true);
         });
     }
+
+  
 }
