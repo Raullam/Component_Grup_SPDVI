@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import spdvi.componentimatge.AzureBlobService;
 import spdvi.componentimatge.ImagePanel;
 import spdvi.logica.CarregarImatge;
+import spdvi.logica.NetejarImatge;
 import spdvi.logica.RedimensionarImatge;
 /*TOMPARE NO TE NAS*/
 public class ImagePanelAzure extends JFrame {
@@ -70,7 +71,7 @@ public class ImagePanelAzure extends JFrame {
         // Añadir funcionalidad a los botones
         btnLoad.addActionListener(e -> CarregarImatge.cargarImagen(containerName, connectionString, bufferedImages, imagePaths, currentIndex, imagePanel));
         btnResize.addActionListener(e -> RedimensionarImatge.redimensionarImagen(imagePanel,this));
-        btnClear.addActionListener(e -> limpiarImagen());
+        btnClear.addActionListener(e -> NetejarImatge.limpiarImagen(imagePanel));
         btnRotate.addActionListener(e -> rotarImagen());
         btnSave.addActionListener(e -> guardarImagenPC());
         btnUpload.addActionListener(e -> selectAndSaveImage());
@@ -134,9 +135,7 @@ public void selectAndSaveImage() {
         }
     }
     
-    private void limpiarImagen() {
-        imagePanel.clearImage();
-    }
+   
     
     private void mostrarSiguienteImagen() {
     if (!bufferedImages.isEmpty()) {
