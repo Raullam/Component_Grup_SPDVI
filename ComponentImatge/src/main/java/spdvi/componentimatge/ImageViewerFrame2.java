@@ -8,7 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class ImageViewerFrame2 extends JFrame {
-    private ImagePanel2 imagePanel;
+    private ImagePanel imagePanel;
     private JButton btnLoad, btnResize, btnClear, btnRotate, btnSave, btnShowDimensions;
 
     public ImageViewerFrame2(String imagePath) {
@@ -17,7 +17,7 @@ public class ImageViewerFrame2 extends JFrame {
         setLayout(new BorderLayout());
 
         // Crear el panel de la imagen
-        imagePanel = new ImagePanel2();
+        imagePanel = new ImagePanel();
 
         // Crear los botones
         btnLoad = new JButton("Cargar Imagen");

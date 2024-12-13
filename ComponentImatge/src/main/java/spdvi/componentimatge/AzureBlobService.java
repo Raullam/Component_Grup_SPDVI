@@ -4,14 +4,6 @@
  */
 package spdvi.componentimatge;
 
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
-import com.azure.storage.blob.specialized.BlobOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  *
