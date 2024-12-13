@@ -1,27 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-import com.azure.storage.blob.BlobServiceClientBuilder;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.models.BlobItem;
+package spdvi.componentimatge;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
-import spdvi.componentimatge.AzureBlobService;
-import spdvi.componentimatge.ImagePanel;
-/*TOMPARE NO TE NAS*/
+import spdvi.logica.AvancarImatge;
+import spdvi.logica.CarregarImatge;
+import spdvi.logica.GuardarImatge;
+import spdvi.logica.GuardarImatgeAzure;
+import spdvi.logica.NetejarImatge;
+import spdvi.logica.RedimensionarImatge;
+import spdvi.logica.RetrocedirImatge;
+import spdvi.logica.RotarImatge;
+
 public class ImagePanelAzure extends JFrame {
     private ImagePanel imagePanel;
     private JButton btnLoad, btnResize, btnClear, btnRotate, btnSave, btnUpload, btnNext, btnPrevious;
@@ -63,16 +54,18 @@ public class ImagePanelAzure extends JFrame {
         // Añadir componentes al frame
         add(imagePanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        
+        
 
         // Añadir funcionalidad a los botones
-        btnLoad.addActionListener(e -> cargarImagen());
-        btnResize.addActionListener(e -> redimensionarImagen());
-        btnClear.addActionListener(e -> limpiarImagen());
-        btnRotate.addActionListener(e -> rotarImagen());
-        btnSave.addActionListener(e -> guardarImagenPC());
-        btnUpload.addActionListener(e -> selectAndSaveImage());
-        btnNext.addActionListener(e -> mostrarSiguienteImagen());
-        btnPrevious.addActionListener(e -> mostrarImagenAnterior());
+        btnLoad.addActionListener(e -> CarregarImatge.cargarImagen(containerName, connectionString, bufferedImages, imagePaths, currentIndex, imagePanel));
+        btnResize.addActionListener(e -> RedimensionarImatge.redimensionarImagen(imagePanel,this));
+        btnClear.addActionListener(e -> NetejarImatge.limpiarImagen(imagePanel));
+        btnRotate.addActionListener(e -> RotarImatge.rotarImagen(imagePanel));
+        btnSave.addActionListener(e -> GuardarImatge.guardarImagenPC(imagePanel,this));
+        btnUpload.addActionListener(e -> GuardarImatgeAzure.selectAndSaveImage(currentImage, blobService, containerName));
+        btnNext.addActionListener(e -> AvancarImatge.mostrarSiguienteImagen(bufferedImages,currentIndex,imagePanel));
+        btnPrevious.addActionListener(e -> RetrocedirImatge.mostrarImagenAnterior(bufferedImages,currentIndex,imagePanel));
 
         // Hacer que el frame escuche teclas
         setFocusable(true);
@@ -81,131 +74,7 @@ public class ImagePanelAzure extends JFrame {
     }
 
     private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
-
-    
-    private void cargarImagen() {
-    BlobContainerClient containerClient = new BlobServiceClientBuilder()
-            .connectionString(connectionString)
-            .buildClient()
-            .getBlobContainerClient(containerName);
-
-    bufferedImages.clear(); // Limpia las imágenes cargadas previamente
-
-    // Iterar sobre los blobs en el contenedor
-    for (BlobItem blobItem : containerClient.listBlobs()) {
-        try {
-            BlobClient blobClient = containerClient.getBlobClient(blobItem.getName());
-            // Descargar el contenido del blob como un array de bytes
-            byte[] imageData = blobClient.downloadContent().toBytes();
-
-            // Convertir el array de bytes en un BufferedImage
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(imageData);
-            BufferedImage img = ImageIO.read(imageStream); // Lee la imagen desde el flujo de bytes
-
-            if (img != null) {
-                bufferedImages.add(img); // Agrega la imagen a la lista
-                imagePaths.add(blobItem.getName()); // Agrega el nombre del archivo si es necesario
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    // Asegúrate de que haya imágenes en la lista
-    if (!bufferedImages.isEmpty()) {
-        currentIndex = 0; // Inicializa al primer índice
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la primera imagen
-    }
-}
-
-
-    private void redimensionarImagen() {
-        String inputWidth = JOptionPane.showInputDialog(this, "Introduce el ancho:");
-        String inputHeight = JOptionPane.showInputDialog(this, "Introduce la altura:");
-        try {
-            int width = Integer.parseInt(inputWidth);
-            int height = Integer.parseInt(inputHeight);
-            imagePanel.resizeImage(width, height);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, introduce números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-
-    private void rotarImagen() {
-        imagePanel.rotateImage(90); // Rotar 90 grados
-    }
-
-    private void guardarImagenPC() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showSaveDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String outputPath = fileChooser.getSelectedFile().getAbsolutePath();
-            imagePanel.saveImage(outputPath);
-        }
-    }
-    
     private BufferedImage currentImage;
-    AzureBlobService blobService = new AzureBlobService(connectionString);
-
-public void selectAndSaveImage() {
-        // Abrir el JFileChooser para seleccionar la imagen
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Selecciona una imagen");
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes JPG & PNG", "jpg", "png"));
-        
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-
-            try {
-                // Cargar la imagen seleccionada
-                currentImage = ImageIO.read(selectedFile);
-
-                // Obtener el nombre del archivo para usarlo como el blobName
-                String fileName = selectedFile.getName(); // Nombre del archivo, como "imagen.jpg"
-                String blobName = fileName; // Usar el nombre del archivo como blobName
-                // O si prefieres asegurarte de que el nombre sea único, puedes agregar un prefijo único
-                // String blobName = UUID.randomUUID().toString() + "_" + fileName;
-
-                // Subir la imagen a Azure Blob Storage
-                byte[] imageBytes = Files.readAllBytes(selectedFile.toPath());  // Leer los bytes del archivo seleccionado
-                blobService.uploadBlob(containerName, blobName, imageBytes);  // Subir los bytes al blob
-
-                JOptionPane.showMessageDialog(null, "Imagen subida correctamente");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error al cargar o subir la imagen: " + e.getMessage());
-            }
-        }
-    }
-    
-    private void limpiarImagen() {
-        imagePanel.clearImage();
-    }
-    
-    private void mostrarSiguienteImagen() {
-    if (!bufferedImages.isEmpty()) {
-        // Incrementar el índice y asegurarse de que no se desborde
-        currentIndex = (currentIndex + 1) % bufferedImages.size();
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la siguiente imagen
-    }
-}
-
-private void mostrarImagenAnterior() {
-    if (!bufferedImages.isEmpty()) {
-        // Decrementar el índice y asegurarse de que no se desborde
-        currentIndex = (currentIndex - 1 + bufferedImages.size()) % bufferedImages.size();
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la imagen anterior
-    }
-}
-
-    // Otros métodos (redimensionar, rotar, limpiar, etc.) se mantienen iguales
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ImagePanelAzure frame = new ImagePanelAzure();
-            frame.setVisible(true);
-        });
-    }
+    AzureBlobService blobService = new AzureBlobService(connectionString);   
+ 
 }

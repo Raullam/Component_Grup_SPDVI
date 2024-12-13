@@ -4,10 +4,16 @@
  */
 package spdvi.logica;
 
+import spdvi.componentimatge.ImagePanel;
+
 /**
  *
  * @author Rulox
  */
 public class NetejarImatge {
+    
+    public static void limpiarImagen(ImagePanel imagePanel) {
+        imagePanel.clearImage();
+    }
     
 }
