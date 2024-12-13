@@ -20,6 +20,9 @@ public class ImagePanelAzure extends JFrame {
     private int currentIndex = 0; // Índice de la imagen actual
     private final String connectionString = "DefaultEndpointsProtocol=https;AccountName=alejandrostorage1;AccountKey=lE5g6+hiDokS8nYgZ9RGcXexPo6wqGWMrho4IiKYEU+9CAJysciPs2q+VHDsoWQ41bfFMAcCmG+h+ASto4i3KQ==;EndpointSuffix=core.windows.net";
     private final String containerName = "images";
+    private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
+    private BufferedImage currentImage;
+    private AzureBlobService blobService = new AzureBlobService(connectionString);   
     
     public ImagePanelAzure() {
         setTitle("Image Viewer Mejorado");
@@ -72,9 +75,5 @@ public class ImagePanelAzure extends JFrame {
         pack();
         setLocationRelativeTo(null); // Centrar ventana
     }
-
-    private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
-    private BufferedImage currentImage;
-    AzureBlobService blobService = new AzureBlobService(connectionString);   
  
 }
