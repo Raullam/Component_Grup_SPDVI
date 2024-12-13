@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import spdvi.componentimatge.AzureBlobService;
 import spdvi.componentimatge.ImagePanel;
 import spdvi.logica.CarregarImatge;
+import spdvi.logica.GuardarImatge;
 import spdvi.logica.NetejarImatge;
 import spdvi.logica.RedimensionarImatge;
 import spdvi.logica.RotarImatge;
@@ -74,7 +75,7 @@ public class ImagePanelAzure extends JFrame {
         btnResize.addActionListener(e -> RedimensionarImatge.redimensionarImagen(imagePanel,this));
         btnClear.addActionListener(e -> NetejarImatge.limpiarImagen(imagePanel));
         btnRotate.addActionListener(e -> RotarImatge.rotarImagen(imagePanel));
-        btnSave.addActionListener(e -> guardarImagenPC());
+        btnSave.addActionListener(e -> GuardarImatge.guardarImagenPC(imagePanel,this));
         btnUpload.addActionListener(e -> selectAndSaveImage());
         btnNext.addActionListener(e -> mostrarSiguienteImagen());
         btnPrevious.addActionListener(e -> mostrarImagenAnterior());
@@ -88,14 +89,6 @@ public class ImagePanelAzure extends JFrame {
     private ArrayList<BufferedImage> bufferedImages = new ArrayList<>();
 
 
-    private void guardarImagenPC() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showSaveDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String outputPath = fileChooser.getSelectedFile().getAbsolutePath();
-            imagePanel.saveImage(outputPath);
-        }
-    }
     
     private BufferedImage currentImage;
     AzureBlobService blobService = new AzureBlobService(connectionString);
