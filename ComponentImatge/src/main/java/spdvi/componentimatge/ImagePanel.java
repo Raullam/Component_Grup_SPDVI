@@ -103,6 +103,15 @@ public class ImagePanel extends JPanel {
     this.rotationAngle = 0; // Restablecer la rotación
     repaint(); // Actualizar el panel
 }
+    // Método para obtener las dimensiones de la imagen
+    public String getCurrentImageDimensions() {
+        if (image != null) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            return "Ancho: " + width + "px, Altura: " + height + "px";
+        }
+        return "No hay imagen cargada.";
+    }
 
 
     @Override
