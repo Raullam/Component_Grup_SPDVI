@@ -1,5 +1,6 @@
 package spdvi.componentimatge;
 
+import spdvi.serveis.AzureBlobService;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

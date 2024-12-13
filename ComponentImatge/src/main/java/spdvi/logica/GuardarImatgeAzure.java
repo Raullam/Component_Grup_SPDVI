@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import spdvi.componentimatge.AzureBlobService;
+import spdvi.serveis.AzureBlobService;
 
 /**
  *
