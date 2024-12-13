@@ -4,10 +4,23 @@
  */
 package spdvi.logica;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import spdvi.componentimatge.ImagePanel;
+
 /**
  *
  * @author Rulox
  */
 public class AvancarImatge {
+    
+    public static void mostrarSiguienteImagen(ArrayList<BufferedImage> bufferedImages, int currentIndex, ImagePanel imagePanel) {
+    if (!bufferedImages.isEmpty()) {
+        // Incrementar el índice y asegurarse de que no se desborde
+        currentIndex = (currentIndex + 1) % bufferedImages.size();
+        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la siguiente imagen
+    }
+}
     
 }
