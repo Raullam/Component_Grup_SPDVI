@@ -21,7 +21,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import spdvi.componentimatge.AzureBlobService;
 import spdvi.componentimatge.ImagePanel;
-
+/*TOMPARE NO TE NAS*/
 public class ImagePanelAzure extends JFrame {
     private ImagePanel imagePanel;
     private JButton btnLoad, btnResize, btnClear, btnRotate, btnSave, btnUpload, btnNext, btnPrevious;
