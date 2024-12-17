@@ -10,6 +10,9 @@ package spdvi.componentimatge;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -22,14 +25,38 @@ public class ImagePanel extends JPanel {
     private BufferedImage image; // Imagen cargada
     private String imagePath; // Ruta de la imagen
     private double rotationAngle; // Ángulo de rotación actual
-
+    private JLabel pixelToolTip;
     public ImagePanel() {
         this.image = null;
         this.imagePath = null;
         this.rotationAngle = 0; // Inicialmente no hay rotación
-        this.setPreferredSize(new Dimension(400, 300)); // Tamaño predeterminado
-    }
+        this.setPreferredSize(new Dimension(400, 300));
+        // Agregar un MouseMotionListener para obtener la posición del ratón
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (image != null) {
+                    // Obtener las coordenadas del ratón
+                    int mouseX = e.getX();
+                    int mouseY = e.getY();
 
+                    // Verificar si el ratón está dentro de los límites de la imagen
+                    if (mouseX >= 0 && mouseX < image.getWidth() && mouseY >= 0 && mouseY < image.getHeight()) {
+                        // Llamar al método para obtener y mostrar las dimensiones de la imagen
+                        showImageDimensionsOverMouse(mouseX, mouseY);
+                    } else {
+                        // Si el ratón está fuera de la imagen, ocultar el texto
+                        pixelToolTip.setVisible(false);
+                    }
+                }
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                // No se necesita implementar nada aquí si solo queremos mover el ratón
+            }
+        });
+    }
     public void loadImage(String imagePath) {
     try {
         // Cargar la imagen
@@ -116,6 +143,30 @@ public String getCurrentImageDimensions() {
         return "No hay imagen cargada";
     }
 }
+// Mostrar las dimensiones de la imagen sobre el ratón
+    private void showImageDimensionsOverMouse(int mouseX, int mouseY) {
+        // Usar el método reutilizable getCurrentImageDimensions() para obtener las dimensiones
+        String dimensions = getCurrentImageDimensions();
+
+        // Crear el JLabel si aún no ha sido creado
+        if (pixelToolTip == null) {
+            pixelToolTip = new JLabel();
+            pixelToolTip.setForeground(Color.WHITE);
+            pixelToolTip.setBackground(new Color(0, 0, 0, 128)); // Fondo semitransparente
+            pixelToolTip.setOpaque(true);
+            pixelToolTip.setVisible(true);
+            this.add(pixelToolTip);
+        }
+
+        // Establecer el texto de las dimensiones
+        pixelToolTip.setText(dimensions);
+
+        // Posicionar el tooltip encima del ratón
+        pixelToolTip.setLocation(mouseX + 10, mouseY + 10); // Posicionarlo cerca del ratón
+
+        // Hacer visible el tooltip
+        pixelToolTip.setVisible(true);
+    }
 
 
 
@@ -141,5 +192,5 @@ public String getCurrentImageDimensions() {
             g.setColor(Color.red);
             g.drawString("Imatge borrada", 10, 20);
         }
-    }
+    }  
 }

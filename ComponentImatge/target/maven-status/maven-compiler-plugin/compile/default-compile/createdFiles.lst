@@ -8,8 +8,7 @@ spdvi\logica\AvancarImatge.class
 spdvi\componentimatge\ImagePanel.class
 spdvi\componentimatge\ImagePanelAzure.class
 spdvi\logica\MostrarDimensions.class
+spdvi\componentimatge\ImagePanel$1.class
 spdvi\logica\RetrocedirImatge.class
 spdvi\logica\NetejarImatge.class
 spdvi\componentimatge\AzureBlobService.class
-spdvi\componentimatge\ImageViewerFrame2$1.class
-spdvi\componentimatge\ImageViewerFrame2.class
