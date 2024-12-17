@@ -73,13 +73,14 @@ public class ImagePanel extends JPanel {
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+} 
+
     
-    public void loadImage2(BufferedImage img) {
+    public void loadImage(BufferedImage img) {
         this.image = img;
+        this.rotationAngle = 0;
         repaint(); // Redibuja el panel con la nueva imagen
     }
-
     
    public void resizeImage(int width, int height) {
     if (image != null) {
@@ -105,7 +106,6 @@ public class ImagePanel extends JPanel {
         this.repaint(); // Repintar el panel con la imagen redimensionada
     }
 }
-
 
 
     public void rotateImage(double angle) {
@@ -193,4 +193,4 @@ public String getCurrentImageDimensions() {
             g.drawString("Imatge borrada", 10, 20);
         }
     }  
-}
+ }

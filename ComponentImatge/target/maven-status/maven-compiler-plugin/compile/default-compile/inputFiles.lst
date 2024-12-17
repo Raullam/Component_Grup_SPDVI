@@ -1,4 +1,3 @@
-D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\componentimatge\AzureBlobService.java
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\componentimatge\ImagePanel.java
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\componentimatge\ImagePanelAzure.java
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\logica\AvancarImatge.java
@@ -11,3 +10,5 @@ D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\sp
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\logica\RetrocedirImatge.java
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\logica\RotarImatge.java
 D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\Main.java
+D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\serveis\AzureBlobService.java
+D:\DAM-2\Dev. Interificies\Component_Grup_SPDVI\ComponentImatge\src\main\java\spdvi\ui\CustomFontExample.java

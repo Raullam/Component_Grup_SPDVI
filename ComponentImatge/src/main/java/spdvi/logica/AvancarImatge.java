@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import spdvi.componentimatge.ImagePanel;
+import spdvi.componentimatge.ImagePanelAzure;
 
 /**
  *
@@ -15,12 +16,14 @@ import spdvi.componentimatge.ImagePanel;
  */
 public class AvancarImatge {
     
-    public static void mostrarSiguienteImagen(ArrayList<BufferedImage> bufferedImages, int currentIndex, ImagePanel imagePanel) {
-    if (!bufferedImages.isEmpty()) {
-        // Incrementar el índice y asegurarse de que no se desborde
-        currentIndex = (currentIndex + 1) % bufferedImages.size();
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la siguiente imagen
+    public static void mostrarSiguienteImagen(ImagePanelAzure mainFrame) {
+        ArrayList<BufferedImage> bufferedImages = mainFrame.getBufferedImages();
+        int currentIndex = mainFrame.getCurrentIndex();
+        
+        if (!bufferedImages.isEmpty()) {
+            currentIndex = (currentIndex + 1) % bufferedImages.size(); // Avanzar al siguiente índice
+            mainFrame.setCurrentIndex(currentIndex); // Actualizar el índice y la imagen actual
+            mainFrame.setCurrentImage(bufferedImages.get(currentIndex)); // Mostrar la nueva imagen
+        }
     }
-}
-    
 }
