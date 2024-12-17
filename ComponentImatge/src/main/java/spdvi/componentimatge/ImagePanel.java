@@ -27,7 +27,7 @@ public class ImagePanel extends JPanel {
         this.image = null;
         this.imagePath = null;
         this.rotationAngle = 0; // Inicialmente no hay rotación
-        this.setPreferredSize(new Dimension(400, 300)); // Tamaño predeterminado
+        this.setPreferredSize(new Dimension(400, 500)); // Tamaño predeterminado
     }
     
     public void loadImage(BufferedImage img) {
