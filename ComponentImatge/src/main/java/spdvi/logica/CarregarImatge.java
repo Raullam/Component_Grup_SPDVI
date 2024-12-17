@@ -52,7 +52,8 @@ public class CarregarImatge {
     // Asegúrate de que haya imágenes en la lista
     if (!bufferedImages.isEmpty()) {
         currentIndex = 0; // Inicializa al primer índice
-        imagePanel.loadImage2(bufferedImages.get(currentIndex)); // Cargar la primera imagen
+        imagePanel.loadImage(bufferedImages.get(currentIndex)); // Cargar la primera imagen
+        
     }
 }
 

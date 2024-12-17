@@ -68,13 +68,43 @@ public class ImagePanelAzure extends JFrame {
         btnRotate.addActionListener(e -> RotarImatge.rotarImagen(imagePanel));
         btnSave.addActionListener(e -> GuardarImatge.guardarImagenPC(imagePanel,this));
         btnUpload.addActionListener(e -> GuardarImatgeAzure.selectAndSaveImage(currentImage, blobService, containerName));
-        btnNext.addActionListener(e -> AvancarImatge.mostrarSiguienteImagen(bufferedImages,currentIndex,imagePanel));
-        btnPrevious.addActionListener(e -> RetrocedirImatge.mostrarImagenAnterior(bufferedImages,currentIndex,imagePanel));
+        btnNext.addActionListener(e -> AvancarImatge.mostrarSiguienteImagen(this));
+        btnPrevious.addActionListener(e -> RetrocedirImatge.mostrarImagenAnterior(this));
 
         // Hacer que el frame escuche teclas
         setFocusable(true);
         pack();
         setLocationRelativeTo(null); // Centrar ventana
     }
- 
+  // Métodos para obtener el índice y la lista de imágenes
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public ArrayList<BufferedImage> getBufferedImages() {
+        return bufferedImages;
+    }
+
+    // Método para actualizar el índice y la imagen
+    public void setCurrentIndex(int index) {
+        this.currentIndex = index;
+        this.currentImage = bufferedImages.get(index);
+    }
+    
+    // Método para cargar una imagen
+    public void setCurrentImage(BufferedImage image) {
+        this.currentImage = image;
+        imagePanel.loadImage(image); // Cargar imagen en el panel
+        adjustHeightToImage(image);
+    }
+
+public void adjustHeightToImage(BufferedImage image) {
+        if (image != null) {
+            // Ajustar el alto del JFrame al tamaño de la imagen
+            this.setSize(this.getWidth(), image.getHeight()); // Mantener el ancho y ajustar solo el alto
+            this.setPreferredSize(new Dimension(this.getWidth(), image.getHeight())); // Establecer solo el alto
+            this.revalidate();
+            this.repaint();
+        }
+    }
 }

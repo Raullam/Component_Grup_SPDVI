@@ -29,30 +29,12 @@ public class ImagePanel extends JPanel {
         this.rotationAngle = 0; // Inicialmente no hay rotación
         this.setPreferredSize(new Dimension(400, 300)); // Tamaño predeterminado
     }
-
-    public void loadImage(String imagePath) {
-    try {
-        // Cargar la imagen
-        this.image = ImageIO.read(new File(imagePath));
-        this.imagePath = imagePath;
-        this.rotationAngle = 0; // Reiniciar la rotación al cargar una nueva imagen
-        
-        // Ajustar el tamaño del panel al tamaño de la imagen
-        if (this.image != null) {
-            this.setPreferredSize(new Dimension(image.getWidth(this), image.getHeight(this)));
-            this.revalidate(); // Revalidar el contenedor para que se ajuste al nuevo tamaño
-        }
-        repaint();
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
     
-    public void loadImage2(BufferedImage img) {
-        this.image = img;
-        repaint(); // Redibuja el panel con la nueva imagen
-    }
-
+    public void loadImage(BufferedImage img) {
+    this.image = img;
+    this.rotationAngle = 0;
+    repaint(); // Redibuja el panel con la nueva imagen
+}
     
    public void resizeImage(int width, int height) {
     if (image != null) {
@@ -78,7 +60,6 @@ public class ImagePanel extends JPanel {
         this.repaint(); // Repintar el panel con la imagen redimensionada
     }
 }
-
 
 
     public void rotateImage(double angle) {
