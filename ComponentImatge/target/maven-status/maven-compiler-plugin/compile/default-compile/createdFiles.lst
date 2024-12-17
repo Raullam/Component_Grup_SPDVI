@@ -3,12 +3,13 @@ spdvi\logica\GuardarImatgeAzure.class
 spdvi\logica\RedimensionarImatge.class
 spdvi\logica\RotarImatge.class
 spdvi\logica\CarregarImatge.class
+spdvi\Main.class
 spdvi\logica\AvancarImatge.class
 spdvi\componentimatge\ImagePanel.class
+spdvi\componentimatge\ImagePanelAzure.class
 spdvi\logica\MostrarDimensions.class
 spdvi\logica\RetrocedirImatge.class
 spdvi\logica\NetejarImatge.class
-ImagePanelAzure.class
 spdvi\componentimatge\AzureBlobService.class
 spdvi\componentimatge\ImageViewerFrame2$1.class
 spdvi\componentimatge\ImageViewerFrame2.class

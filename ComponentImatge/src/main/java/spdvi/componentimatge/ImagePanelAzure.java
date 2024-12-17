@@ -12,10 +12,12 @@ import spdvi.logica.NetejarImatge;
 import spdvi.logica.RedimensionarImatge;
 import spdvi.logica.RetrocedirImatge;
 import spdvi.logica.RotarImatge;
+import spdvi.logica.MostrarDimensions;
+
 
 public class ImagePanelAzure extends JFrame {
     private ImagePanel imagePanel;
-    private JButton btnLoad, btnResize, btnClear, btnRotate, btnSave, btnUpload, btnNext, btnPrevious;
+    private JButton btnLoad, btnResize, btnClear, btnRotate, btnSave, btnUpload, btnNext, btnPrevious, btnShowDimensions;
     private ArrayList<String> imagePaths = new ArrayList<>();
     private int currentIndex = 0; // Índice de la imagen actual
     private final String connectionString = "DefaultEndpointsProtocol=https;AccountName=alejandrostorage1;AccountKey=lE5g6+hiDokS8nYgZ9RGcXexPo6wqGWMrho4IiKYEU+9CAJysciPs2q+VHDsoWQ41bfFMAcCmG+h+ASto4i3KQ==;EndpointSuffix=core.windows.net";
@@ -32,6 +34,8 @@ public class ImagePanelAzure extends JFrame {
         // Crear los botones
         btnLoad = new JButton("Cargar Imagen");
         btnResize = new JButton("Redimensionar");
+        btnShowDimensions = new JButton("Mostrar Dimensiones");
+
         btnClear = new JButton("Limpiar Imagen");
         btnRotate = new JButton("Rotar Imagen");
         btnSave = new JButton("Guardar Imagen");
@@ -44,6 +48,7 @@ public class ImagePanelAzure extends JFrame {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(btnLoad);
         buttonPanel.add(btnResize);
+        buttonPanel.add(btnShowDimensions);
         buttonPanel.add(btnClear);
         buttonPanel.add(btnRotate);
         buttonPanel.add(btnSave);
@@ -66,7 +71,7 @@ public class ImagePanelAzure extends JFrame {
         btnUpload.addActionListener(e -> GuardarImatgeAzure.selectAndSaveImage(currentImage, blobService, containerName));
         btnNext.addActionListener(e -> AvancarImatge.mostrarSiguienteImagen(bufferedImages,currentIndex,imagePanel));
         btnPrevious.addActionListener(e -> RetrocedirImatge.mostrarImagenAnterior(bufferedImages,currentIndex,imagePanel));
-
+        btnShowDimensions.addActionListener(e -> MostrarDimensions.mostrarDimensions(imagePanel));
         // Hacer que el frame escuche teclas
         setFocusable(true);
         pack();

@@ -4,26 +4,14 @@
  */
 package spdvi.logica;
 
-/**
- *
- * @author 34666
- */
-
 import spdvi.componentimatge.ImagePanel;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MostrarDimensions implements ActionListener {
-    private final ImagePanel imagePanel;
+public class MostrarDimensions {
 
-    public MostrarDimensions(ImagePanel imagePanel) {
-        this.imagePanel = imagePanel;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Obtener las dimensiones de la imagen
+    // Método estático que se llama desde el botón
+    public static void mostrarDimensions(ImagePanel imagePanel) {
+        // Obtener las dimensiones de la imagen desde ImagePanel
         String dimensions = imagePanel.getCurrentImageDimensions();
         // Mostrar las dimensiones en un cuadro de mensaje
         JOptionPane.showMessageDialog(null, dimensions, "Dimensiones de la Imagen", JOptionPane.INFORMATION_MESSAGE);

@@ -104,14 +104,19 @@ public class ImagePanel extends JPanel {
     repaint(); // Actualizar el panel
 }
     // Método para obtener las dimensiones de la imagen
-    public String getCurrentImageDimensions() {
-        if (image != null) {
-            int width = image.getWidth();
-            int height = image.getHeight();
-            return "Ancho: " + width + "px, Altura: " + height + "px";
-        }
-        return "No hay imagen cargada.";
+    // En la clase ImagePanel, agrega este método
+
+public String getCurrentImageDimensions() {
+    if (image != null) {
+        // Obtener el ancho y alto de la imagen cargada
+        int width = image.getWidth();
+        int height = image.getHeight();
+        return "Dimensiones: " + width + " x " + height;
+    } else {
+        return "No hay imagen cargada";
     }
+}
+
 
 
     @Override
