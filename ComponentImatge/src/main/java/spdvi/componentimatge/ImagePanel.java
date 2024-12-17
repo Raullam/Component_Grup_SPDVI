@@ -30,8 +30,8 @@ public class ImagePanel extends JPanel {
         this.image = null;
         this.imagePath = null;
         this.rotationAngle = 0; // Inicialmente no hay rotación
-        this.setPreferredSize(new Dimension(400, 300));
         // Agregar un MouseMotionListener para obtener la posición del ratón
+        this.setPreferredSize(new Dimension(400, 500)); // Tamaño predeterminado
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseMoved(MouseEvent e) {
